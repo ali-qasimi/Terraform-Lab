@@ -19,9 +19,9 @@ module "eks" {
     }
   }
 
-  vpc_id                   = "vpc-1234556abcdef"
-  subnet_ids               = ["subnet-abcde012", "subnet-bcde012a", "subnet-fghi345a"]
-  control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
+  vpc_id                   = aws_vpc.vpc_eks.id
+  subnet_ids               = [aws_subnet.node_subnet_a.id, aws_subnet.node_subnet_b.id, aws_subnet.node_subnet_c.id]
+  control_plane_subnet_ids = [aws_subnet.control_plane_subnet_a.id, aws_subnet.control_plane_subnet_b.id, aws_subnet.control_plane_subnet_c.id]
 
   # Self Managed Node Group(s)
   self_managed_node_group_defaults = {
@@ -92,7 +92,7 @@ module "eks" {
   # aws-auth configmap
   manage_aws_auth_configmap = true
 
-  aws_auth_roles = [
+  /* aws_auth_roles = [
     {
       rolearn  = "arn:aws:iam::66666666666:role/role1"
       username = "role1"
@@ -117,6 +117,7 @@ module "eks" {
     "777777777777",
     "888888888888",
   ]
+  */
 
   tags = {
     Environment = "dev"
